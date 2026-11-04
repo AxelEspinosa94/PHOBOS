@@ -60,6 +60,8 @@ int tensor_logreg_gradients(
     for (size_t i = 0; i < m; ++i)
         db += ed[i];
 
+    db /= m;  // average over m samples
+
     tensor_free(e);
 
     *dW_out = dW;
