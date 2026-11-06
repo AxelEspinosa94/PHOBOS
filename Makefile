@@ -7,6 +7,7 @@ SRC_DIR := src
 TEST_DIR := tests
 BUILD_DIR := build
 INC_DIR := include
+EXAMPLE_DIR := examples/spam_classifier
 
 # Compiler
 CC := gcc
@@ -22,6 +23,7 @@ TESTS := $(wildcard $(TEST_DIR)/*.c)
 # Object files
 OBJS := $(patsubst $(SRC_DIR)/%.c, $(BUILD_DIR)/%.o, $(SRCS))
 TEST_OBJS := $(patsubst $(TEST_DIR)/%.c, $(BUILD_DIR)/%.o, $(TESTS))
+EXAMPLE_OBJS := $(patsubst $(EXAMPLE_DIR)/%.c, $(BUILD_DIR)/%.o, $(EXAMPLES))
 
 # Remove main.o from engine objects for tests
 ENGINE_OBJS := $(filter-out $(BUILD_DIR)/main.o, $(OBJS))
@@ -41,10 +43,25 @@ $(TARGET): $(OBJS)
 	$(CC) $(OBJS) -o $(TARGET) $(LDLIBS) $(LDFLAGS)
 
 # ================================
+# Comp binary
+# ================================
+build/%: build/%.o $(ENGINE_OBJS)
+	$(CC) $^ -o $@ $(LDLIBS) $(LDFLAGS)
+
+build/%.o: $(EXAMPLE_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# ================================
 # Test binaries (auto-detected)
 # ================================
 # Example: build/test_tensor
 $(BUILD_DIR)/test_%: $(BUILD_DIR)/test_%.o $(ENGINE_OBJS)
+	$(CC) $^ -o $@ $(LDLIBS) $(LDFLAGS)
+
+$(BUILD_DIR)/train_%: $(BUILD_DIR)/train_%.o $(ENGINE_OBJS)
+	$(CC) $^ -o $@ $(LDLIBS) $(LDFLAGS)
+
+$(BUILD_DIR)/predict_%: $(BUILD_DIR)/predict_%.o $(ENGINE_OBJS)
 	$(CC) $^ -o $@ $(LDLIBS) $(LDFLAGS)
 
 # ================================
@@ -54,6 +71,9 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(BUILD_DIR)/%.o: $(TEST_DIR)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(BUILD_DIR)/%.o: $(EXAMPLE_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # ================================

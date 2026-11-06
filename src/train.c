@@ -106,10 +106,11 @@ int train_loop(
             return -4;
 
         printf(
-            "[Epoch %d/%d] Loss = %.6f\n",
+            "[Epoch %d/%d] Loss = %.6f Bias=%f\n",
             epoch + 1,
             epochs,
-            loss);
+            loss,
+            *b);
     }
 
     return 0;

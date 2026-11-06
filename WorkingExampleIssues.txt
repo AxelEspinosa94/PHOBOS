@@ -1,0 +1,114 @@
+
+Issue 22.1 — Create Example Dataset
+
+Labels: example enhancement
+
+Description
+
+Create the initial Spam/No‑Spam dataset for the PHOBOS example.
+
+Acceptance Criteria
+examples/spam_classifier/dataset.csv created
+Contains spam and non‑spam samples
+Includes headers
+At least 20 samples
+Dataset documented
+Output
+examples/
+└── spam_classifier/
+    └── dataset.csv
+
+Issue 22.2 — Bag‑of‑Words / TF‑IDF Preprocessing
+
+Labels: example enhancement
+
+Description
+
+Create a Python preprocessing pipeline that transforms the dataset into numerical features that PHOBOS‑ML can consume.
+
+Acceptance Criteria
+Python script created
+Loads dataset.csv
+Generates vocabulary
+Produces X.csv
+Produces y.csv
+Supports re‑execution
+Output
+examples/spam_classifier/
+├── preprocess.py
+├── X.csv
+└── y.csv
+
+Issue 22.3 — Training Pipeline
+
+Labels: example enhancement
+
+Description
+
+Train a Logistic Regression model using PHOBOS‑ML and the generated dataset.
+
+Acceptance Criteria
+Loads X.csv
+Loads y.csv
+Runs train_loop()
+Uses SGD
+Prints loss progression
+Saves model.bin
+Output
+examples/spam_classifier/
+└── train_spam.c
+
+Issue 22.4 — Prediction Pipeline
+
+Labels: example enhancement
+
+Description
+
+Load a saved PHOBOS‑ML model and generate predictions for new samples.
+
+Acceptance Criteria
+Loads model.bin
+Receives input vector
+Runs inference
+Prints probability
+Prints SPAM / NOT SPAM
+Output
+examples/spam_classifier/
+└── predict_spam.c
+
+Issue 22.5 — Accuracy Evaluation
+
+Labels: example enhancement
+
+Description
+
+Compute predictions on the entire dataset and report model accuracy.
+
+Acceptance Criteria
+Loads dataset
+Computes predictions
+Reports accuracy
+Reports confusion matrix (optional)
+Example Output
+Accuracy: 92.3%
+
+TP: 11
+TN: 12
+FP: 1
+FN: 0
+
+Issue 22.6 — Example Documentation
+
+Labels: documentation
+
+Description
+
+Document the complete workflow from raw dataset to prediction.
+
+Acceptance Criteria
+README added
+Example fully reproducible
+Training commands documented
+Prediction commands documented
+Output
+examples/spam_classifier/README.md
