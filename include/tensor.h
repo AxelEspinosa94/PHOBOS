@@ -179,6 +179,10 @@ tensor_t* tensor_mul(const tensor_t* A, const tensor_t* B);
  */
 tensor_t* tensor_copy(const tensor_t* src);
 
+/* ============================================================
+   Activation functions
+   ============================================================ */
+
 /**
  * @brief ReLU activation: max(x, 0)
  *
